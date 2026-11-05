@@ -1,0 +1,30 @@
+name: Test installed taplo can lint and format TOML
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+      - name: Assert taplo lints valid TOML and rejects invalid TOML
+        run: |
+          WORK="$(mktemp -d)"
+          printf '[package]\nname   =   "demo"\nversion="1.0.0"\n' > "$WORK/good.toml"
+          printf '[package\nname = \n' > "$WORK/bad.toml"
+          if ! taplo lint "$WORK/good.toml"; then
+            echo "FAIL: lint failed on valid TOML"
+            exit 1
+          fi
+          if taplo lint "$WORK/bad.toml"; then
+            echo "FAIL: lint succeeded on invalid TOML"
+            exit 1
+          fi
+          taplo fmt "$WORK/good.toml"
+          cat "$WORK/good.toml"
+          if ! grep -q '^name = "demo"$' "$WORK/good.toml"; then
+            echo "FAIL: taplo fmt did not normalize spacing"
+            exit 1
+          fi
+          echo "PASS"
