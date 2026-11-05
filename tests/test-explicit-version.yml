@@ -1,0 +1,21 @@
+name: Test explicit version input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          version: "0.10.0"
+      - name: Assert requested version installed
+        run: |
+          VERSION_OUT="$(taplo --version)"
+          echo "actual: $VERSION_OUT"
+          if ! echo "$VERSION_OUT" | grep -q "taplo 0.10.0"; then
+            echo "FAIL: expected 'taplo 0.10.0'"
+            exit 1
+          fi
+          echo "PASS"

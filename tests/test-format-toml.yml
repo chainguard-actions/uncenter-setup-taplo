@@ -1,0 +1,31 @@
+name: Test installed taplo formats TOML
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+      - name: Assert taplo fmt works
+        run: |
+          WORK="$(mktemp -d)"
+          cd "$WORK"
+          printf '[package]\nname    =    "demo"\nversion="1.0.0"\n' > bad.toml
+          if taplo fmt --check bad.toml; then
+            echo "FAIL: expected fmt --check to fail on unformatted file"
+            exit 1
+          fi
+          taplo fmt bad.toml
+          echo "formatted:"
+          cat bad.toml
+          if ! grep -q '^name = "demo"$' bad.toml; then
+            echo "FAIL: file not formatted as expected"
+            exit 1
+          fi
+          if ! taplo fmt --check bad.toml; then
+            echo "FAIL: formatted file still fails check"
+            exit 1
+          fi
+          echo "PASS"
