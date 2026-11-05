@@ -8,6 +8,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 | Version | Tag | Upstream commit | Hardening report |
 |---------|-----|-----------------|------------------|
+| v1.0.7 | [`v1.0.7`](https://github.com/chainguard-actions/uncenter-setup-taplo/tree/v1.0.7) | [`efdef75`](https://github.com/uncenter/setup-taplo/commit/efdef757b4172bfb24e9d834001e536085ea18da) | [`HARDENING.md`](https://github.com/chainguard-actions/uncenter-setup-taplo/blob/v1.0.7/HARDENING.md) |
 | v1.0.8 | [`v1.0.8`](https://github.com/chainguard-actions/uncenter-setup-taplo/tree/v1.0.8) | [`4f203fd`](https://github.com/uncenter/setup-taplo/commit/4f203fdb4f3b1e289c8382cf90d8397d2338df2e) | [`HARDENING.md`](https://github.com/chainguard-actions/uncenter-setup-taplo/blob/v1.0.8/HARDENING.md) |
 | v2 | [`v2`](https://github.com/chainguard-actions/uncenter-setup-taplo/tree/v2) | [`b18c8c8`](https://github.com/uncenter/setup-taplo/commit/b18c8c8302695fe63d6853bc004006215ac52b91) | [`HARDENING.md`](https://github.com/chainguard-actions/uncenter-setup-taplo/blob/v2/HARDENING.md) |
 
