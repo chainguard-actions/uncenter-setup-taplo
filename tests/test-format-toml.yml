@@ -1,0 +1,27 @@
+name: Test installed taplo formats and checks TOML
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+      - name: Assert taplo formats valid TOML and rejects invalid TOML
+        run: |
+          WORK="$(mktemp -d)"
+          cd "$WORK"
+          printf 'a   =   1\n[table]\nkey="value"\n' > good.toml
+          taplo fmt good.toml
+          echo "formatted:"; cat good.toml
+          if ! grep -qx 'a = 1' good.toml; then
+            echo "FAIL: expected 'a = 1' after formatting"
+            exit 1
+          fi
+          printf 'a = = 1\n' > bad.toml
+          if taplo check bad.toml; then
+            echo "FAIL: taplo check should fail on invalid TOML"
+            exit 1
+          fi
+          echo "PASS"

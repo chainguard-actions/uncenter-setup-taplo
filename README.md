@@ -1,15 +1,39 @@
-# uncenter/setup-taplo
+# setup-taplo
 
-Install the Taplo CLI
+Setup [Taplo](https://taplo.tamasfe.dev/) in GitHub Actions.
 
-Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at [https://github.com/uncenter/setup-taplo](https://github.com/uncenter/setup-taplo).
+## Usage
 
-## Versions
+```yaml
+- uses: uncenter/setup-taplo@v1.0.7
+  with:
+    version: "0.8.1"
+```
 
-| Version | Tag | Upstream commit | Hardening report |
-|---------|-----|-----------------|------------------|
-| v1.0.8 | [`v1.0.8`](https://github.com/chainguard-actions/uncenter-setup-taplo/tree/v1.0.8) | [`4f203fd`](https://github.com/uncenter/setup-taplo/commit/4f203fdb4f3b1e289c8382cf90d8397d2338df2e) | [`HARDENING.md`](https://github.com/chainguard-actions/uncenter-setup-taplo/blob/v1.0.8/HARDENING.md) |
-| v2 | [`v2`](https://github.com/chainguard-actions/uncenter-setup-taplo/tree/v2) | [`b18c8c8`](https://github.com/uncenter/setup-taplo/commit/b18c8c8302695fe63d6853bc004006215ac52b91) | [`HARDENING.md`](https://github.com/chainguard-actions/uncenter-setup-taplo/blob/v2/HARDENING.md) |
+## Examples
+
+```yaml
+name: Check formatting
+
+on:
+  push:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: uncenter/setup-taplo@v1.0.7
+        with:
+          version: "0.8.1"
+
+      - run: taplo fmt foo.toml --check
+```
+
+## License
+
+[MIT](LICENSE)
 
 ## Privacy
 
